@@ -1,0 +1,16 @@
+.git
+.gitignore
+.idea
+.vscode
+*.iml
+
+target/*
+!target/*-runner
+!target/*-runner.jar
+!target/lib/
+!target/lib/**
+!target/quarkus-app/
+!target/quarkus-app/**
+
+README.md
+docker-compose*.yml

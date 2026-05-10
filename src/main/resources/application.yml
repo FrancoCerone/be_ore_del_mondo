@@ -1,0 +1,67 @@
+quarkus:
+  application:
+    name: ore-del-mondo-api
+  http:
+    port: ${PORT:8080}
+    cors:
+      enabled: true
+      origins: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://localhost:8080}
+      methods: GET,POST,PUT,DELETE,OPTIONS
+      headers: accept,authorization,content-type,x-requested-with
+      exposed-headers: location
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      url: ${QUARKUS_DATASOURCE_JDBC_URL:jdbc:postgresql://localhost:5432/ore_del_mondo}
+    username: ${QUARKUS_DATASOURCE_USERNAME:quarkus}
+    password: ${QUARKUS_DATASOURCE_PASSWORD:quarkus}
+  hibernate-orm:
+    database:
+      generation: none
+    log:
+      sql: false
+  flyway:
+    migrate-at-start: true
+  smallrye-openapi:
+    path: /q/openapi
+    info-title: Ore Del Mondo API
+    info-version: 1.0.0
+    info-description: REST API for a luxury watch ecommerce platform.
+  swagger-ui:
+    always-include: true
+    path: /q/swagger-ui
+  log:
+    level: INFO
+    console:
+      json: ${JSON_LOGS:true}
+
+app:
+  security:
+    jwt-secret: ${JWT_SECRET:change-this-development-secret-with-at-least-32-chars}
+    jwt-issuer: ${JWT_ISSUER:ore-del-mondo-api}
+    token-ttl-seconds: ${JWT_TOKEN_TTL_SECONDS:86400}
+
+"%dev":
+  quarkus:
+    console:
+      color: true
+    log:
+      console:
+        json: false
+
+"%test":
+  quarkus:
+    datasource:
+      jdbc:
+        url: ${QUARKUS_DATASOURCE_JDBC_URL:jdbc:postgresql://localhost:5432/ore_del_mondo_test}
+    flyway:
+      clean-at-start: true
+    log:
+      console:
+        json: false
+
+"%prod":
+  quarkus:
+    datasource:
+      jdbc:
+        url: ${QUARKUS_DATASOURCE_JDBC_URL:jdbc:postgresql://db:5432/ore_del_mondo}
