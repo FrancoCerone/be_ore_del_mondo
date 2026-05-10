@@ -3,6 +3,7 @@ package org.franco.watch.service;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
@@ -29,11 +30,17 @@ public class WatchService {
     private final WatchRepository watchRepository;
     private final WatchMapper watchMapper;
     private final SlugService slugService;
+    private final EntityManager entityManager;
 
-    public WatchService(WatchRepository watchRepository, WatchMapper watchMapper, SlugService slugService) {
+    public WatchService(
+            WatchRepository watchRepository,
+            WatchMapper watchMapper,
+            SlugService slugService,
+            EntityManager entityManager) {
         this.watchRepository = watchRepository;
         this.watchMapper = watchMapper;
         this.slugService = slugService;
+        this.entityManager = entityManager;
     }
 
     @Transactional
@@ -140,6 +147,9 @@ public class WatchService {
         if (requests == null || requests.isEmpty()) {
             return;
         }
+        // Flush deletes from orphanRemoval before inserts; otherwise a new cover row can be
+        // inserted while the old cover still exists, violating ux_watch_images_single_cover.
+        entityManager.flush();
         long covers = requests.stream().filter(image -> Boolean.TRUE.equals(image.cover())).count();
         if (covers > 1) {
             throw new ConflictException("Only one cover image is allowed");
