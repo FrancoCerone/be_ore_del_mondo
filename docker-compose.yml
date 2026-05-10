@@ -29,7 +29,7 @@ services:
       QUARKUS_DATASOURCE_USERNAME: quarkus
       QUARKUS_DATASOURCE_PASSWORD: quarkus
       JWT_SECRET: change-this-development-secret-with-at-least-32-chars
-      CORS_ORIGINS: http://localhost:4000,http://127.0.0.1:4000,http://[::1]:4000,http://localhost:3000,http://localhost:8080
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4000,http://127.0.0.1:4000,http://[::1]:4000,http://localhost:3000,http://localhost:8080,http://82.165.106.157,http://82.165.106.157:3000,http://82.165.106.157:4000}
       JSON_LOGS: "true"
     ports:
       - "8080:8080"
