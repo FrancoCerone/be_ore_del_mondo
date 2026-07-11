@@ -5,7 +5,7 @@ quarkus:
     port: ${PORT:8080}
     cors:
       enabled: true
-      origins: ${CORS_ORIGINS:http://localhost:4000,http://127.0.0.1:4000,http://[::1]:4000,http://localhost:3000,http://localhost:8080,http://82.165.106.157,http://82.165.106.157:3000,http://82.165.106.157:4000}
+      origins: ${CORS_ORIGINS:http://localhost:4000,http://127.0.0.1:4000,http://[::1]:4000,http://localhost:5000,http://127.0.0.1:5000,http://[::1]:5000,http://localhost:3000,http://localhost:8080,http://82.165.106.157,http://82.165.106.157:3000,http://82.165.106.157:4000,http://82.165.106.157:5000}
       methods: GET,POST,PUT,DELETE,OPTIONS
       headers: accept,authorization,content-type,x-requested-with
       exposed-headers: location
